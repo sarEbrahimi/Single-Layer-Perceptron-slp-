@@ -3,24 +3,28 @@ import matplotlib.pyplot as plt
 import random
 
 #----------------------------------------------------------------LETS START
-class perceptron(object):
+
+sample1 = [0, 2]
+sample2 = [3, 4]
+sample3 = [2, 6]
+sample4 = [1, -2]
+sample5 = [4, -3]
+sample6 = [8, 6]
+sample7 = [5, 2]
+sample8 = [9, 3]
+sample9 = [6, 9]
+sample10 = [7, -1]
+sample = [sample1, sample2, sample3, sample4, sample5, sample6, sample7, sample8, sample9, sample10]
+
+class perceptron(object , sample):
+    sample = sample
 
     # -----------------------------------------------------------STEP 1
     # for use of samples . get them prepared
-    def pre_sample(self):
+    def pre_sample(self , sample):
         #target = [1, 1, 1, 1, 1, 0, 0, 0, 0, 0]
 
-        sample1 = [0, 2]
-        sample2 = [3, 4]
-        sample3 = [2, 6]
-        sample4 = [1, -2]
-        sample5 = [4, -3]
-        sample6 = [8, 6]
-        sample7 = [5, 2]
-        sample8 = [9, 3]
-        sample9 = [6, 9]
-        sample10 = [7, -1]
-        sample = [sample1, sample2, sample3, sample4, sample5, sample6, sample7, sample8, sample9, sample10]
+        
         return sample
 
 
@@ -142,17 +146,7 @@ class perceptron(object):
         plt.clear()
         plt.show()
 
-
-
-
-
-
-
-
-
-
-
-perceptron = perceptron()
+perceptron = perceptron(sample)
 perceptron.prediction()
 
 
