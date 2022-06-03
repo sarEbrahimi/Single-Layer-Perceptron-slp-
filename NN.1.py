@@ -2,54 +2,38 @@ import numpy as np
 import matplotlib.pyplot as plt
 import random
 
-#----------------------------------------------------------------LETS START
-
-sample1 = [0, 2]
-sample2 = [3, 4]
-sample3 = [2, 6]
-sample4 = [1, -2]
-sample5 = [4, -3]
-sample6 = [8, 6]
-sample7 = [5, 2]
-sample8 = [9, 3]
-sample9 = [6, 9]
-sample10 = [7, -1]
-sample = [sample1, sample2, sample3, sample4, sample5, sample6, sample7, sample8, sample9, sample10]
-
-class perceptron(object , sample):
-    sample = sample
+# ----------------------------------------------------------------LETS START
+class perceptron(object):
 
     # -----------------------------------------------------------STEP 1
     # for use of samples . get them prepared
-    def pre_sample(self , sample):
-        #target = [1, 1, 1, 1, 1, 0, 0, 0, 0, 0]
-
-        
+    def pre_sample(self, sample):
+        """takes in data , return a trained neural."""
         return sample
 
-
-     #illustrate sample on plot
     def show_sample(self):
-        # i wanna see my sample on plot
-        class1_x = np.array([0, 3, 2, 1, 4])
-        class1_y = np.array([2, 4, 6, -2, -3])
+        """illustrate sample on plot."""
+        class1_x = sample1[:,0]
+        class1_y = sample1[:,1]
         plt.scatter(class1_x, class1_y, color='blue')
 
-        class2_x = np.array([8, 5, 9, 6, 7])
-        class2_y = np.array([6, 2, 3, 9, -1])
+        class2_x = sample2[:,0]
+        class2_y = sample2[:,1]
         plt.scatter(class2_x, class2_y, color='red')
 
-        plt.title('samples')
+        plt.title('Data Samples')
         plt.show()
 
-    #------------------------------------------------------STEP 2
-    #activation function
+    # ------------------------------------------------------STEP 2
+    # activation function
     # hardlim function
     def hardlim(self, n):
+        """take in n , return exit of function."""
         return 1 if n >= 0 else  0
 
     # generate weight 1*2
     def gen_weight(self):
+        """generate weight in [0,1]."""
         weight = []
         for i in range(2):
             w = round(random.random(), 1)
@@ -57,12 +41,11 @@ class perceptron(object , sample):
         print('weight is : ', weight)
         return weight
 
-
-
-    def line_function(self,weight,bias):
+    def line_function(self, weight, bias):
+        """take in w and b, calcute line function(boundary)."""
         # line function
         # w1.x + w2.y + b = 0
-        # we use flag to could swich between tow functions
+        # we use flag to could swich between tow functions for error in denominator
         w1, w2 = weight
         flag = 0
         x = random.sample(range(0, 9), 9)
@@ -86,29 +69,33 @@ class perceptron(object , sample):
                 y.append(a)
                 flag = 0
 
-        return flag,x,y
+        return flag, x, y
 
+    # ------------------------------------------------------------------STEP 3
+    # run an input through the perceptron and return an output
+    def prediction(self,sample1 , sample2 ,target):
+        """
+        generate weight
+        calcute error
+        use hardlim to get output
 
-    #------------------------------------------------------------------STEP 3
-    #run an input through the perceptron and return an output
-    def prediction(self):
+        """
         # x*w + b
         # a = hardlim(w * x + b)
         # error = target - a(output of hardlim function)
         weight = self.gen_weight()
-        sample = self.pre_sample()
         bias = 0.5
-        target = [0, 0, 0, 0, 0 , 1, 1, 1, 1, 1]
-        class1_x = np.array([0, 3, 2, 1, 4])
-        class1_y = np.array([2, 4, 6, -2, -3])
-        class2_x = np.array([8, 5, 9, 6, 7])
-        class2_y = np.array([6, 2, 3, 9, -1])
+        target = target
+        class1_x = sample1[:,0]
+        class1_y = sample1[:,1]
+        class2_x = sample2[:,0]
+        class2_y = sample2[:,1]
 
         flag_error = 1
         while (flag_error):
             flag_error = 0
+            sample = np.concatenate( (sample1,sample2 ), axis=0)
             for i in range(len(sample)):
-
 
                 print('***********the ', i + 1, 'th iteration************')
                 s = np.matmul(weight, sample[i])
@@ -146,7 +133,26 @@ class perceptron(object , sample):
         plt.clear()
         plt.show()
 
-perceptron = perceptron(sample)
-perceptron.prediction()
+#data will take in
+if __name__ == '__main__':
+    sample1 = np.array([
+        [0, 2],
+        [3, 4],
+        [2, 6],
+        [1, -2],
+        [4, -3]
+    ])
+
+    sample2 = np.array([
+        [8, 6],
+        [5, 2],
+        [9, 3],
+        [6, 9],
+        [7, -1]
+    ])
+    target = np.array( [0,0,0,0,0,1,1,1,1,1] )
+    
+perceptron = perceptron()
+perceptron.prediction(sample1, sample2 , target)
 
 
